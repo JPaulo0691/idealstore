@@ -7,7 +7,6 @@ import org.example.idealstore.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +30,30 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario atualizarSenha(Long idUsuario, String password) {
+    public Usuario atualizarSenha(Long idUsuario, String password, String novaSenha, String confirmaSenha) {
 
+        if(!novaSenha.equals(confirmaSenha)){
+            throw new RuntimeException("Nova senha não confere com a confirmação de senha....");
+        }
+
+         if(novaSenha.equals("")) {
+             throw new RuntimeException("Você não pode ter uma nova senha em branco");
+         }
+
+         if(!novaSenha.matches(".{6,}")){
+             throw new RuntimeException("Você não pode ter uma nova senha menor que 6 dígitos.");
+         }
         Usuario senhaUsuario = buscarPorId(idUsuario);
 
-        senhaUsuario.setPassword(password);
+        if(!senhaUsuario.getPassword().equals(password)){
+            throw new RuntimeException("Sua senha não confere");
+        }
 
+        if (senhaUsuario.getPassword().equals(novaSenha)){
+            throw new RuntimeException("Senha Atual não pode ser igual a mesma senha");
+        }
+
+        senhaUsuario.setPassword(novaSenha);
         return  senhaUsuario;
 
     }
