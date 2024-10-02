@@ -36,13 +36,6 @@ public class UsuarioService {
             throw new RuntimeException("Nova senha não confere com a confirmação de senha....");
         }
 
-         if(novaSenha.equals("")) {
-             throw new RuntimeException("Você não pode ter uma nova senha em branco");
-         }
-
-         if(!novaSenha.matches(".{6,}")){
-             throw new RuntimeException("Você não pode ter uma nova senha menor que 6 dígitos.");
-         }
         Usuario senhaUsuario = buscarPorId(idUsuario);
 
         if(!senhaUsuario.getPassword().equals(password)){

@@ -1,5 +1,6 @@
 package org.example.idealstore.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.idealstore.dto.request.UsuarioRequest;
 import org.example.idealstore.dto.request.UsuarioUpdatePassword;
@@ -22,7 +23,7 @@ public class UsuarioController {
     private final ConvertDTO convertDTO;
 
     @PostMapping
-    public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody UsuarioRequest usuarioDto){
+    public ResponseEntity<UsuarioResponse> cadastrarUsuario(@Valid @RequestBody UsuarioRequest usuarioDto){
         Usuario user = usuarioService.salvar(convertDTO.convertObjects(usuarioDto, Usuario.class));
 
         return ResponseEntity.status(HttpStatus.CREATED).body((UsuarioResponse) convertDTO.convertObjects(user, UsuarioResponse.class));
@@ -44,7 +45,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @RequestBody UsuarioUpdatePassword usuario){
+    public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @Valid @RequestBody UsuarioUpdatePassword usuario){
         Usuario user = convertDTO.convertObjects(usuarioService.atualizarSenha(id
                                                                               , usuario.getSenhaAntiga()
                                                                               , usuario.getNovaSenha()
