@@ -3,7 +3,10 @@ package org.example.idealstore.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.Usuario;
+import org.example.idealstore.exception.custom.EntityNotFoundException;
+import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
 import org.example.idealstore.repository.UsuarioRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +19,12 @@ public class UsuarioService {
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        try{
+            return usuarioRepository.save(usuario);
+        }catch (DataIntegrityViolationException ex){
+            throw new UsernameUniqueViolationException(String.format("Username {%s} já cadastrado", usuario.getUsername()));
+        }
+
     }
 
     public List<Usuario> listarTodosUsuarios(){
@@ -25,7 +33,7 @@ public class UsuarioService {
 
     public Usuario buscarPorId(Long usuarioId){
         return usuarioRepository.findById(usuarioId)
-                                .orElseThrow(() ->new RuntimeException("Usuário não encontrado"));
+                                .orElseThrow(() ->new EntityNotFoundException(String.format("Usuário id nr.%d não encontrado",usuarioId)));
 
     }
 
