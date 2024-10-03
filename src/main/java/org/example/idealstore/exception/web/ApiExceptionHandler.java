@@ -3,6 +3,7 @@ package org.example.idealstore.exception.web;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
+import org.example.idealstore.exception.custom.PasswordInvalidException;
 import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,15 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request,HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+
+    @ExceptionHandler(PasswordInvalidException.class)
+    public ResponseEntity<ErrorMessage> passwordInvalidException(RuntimeException ex,
+                                                                HttpServletRequest request){
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request,HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 }

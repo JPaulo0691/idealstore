@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
+import org.example.idealstore.exception.custom.PasswordInvalidException;
 import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
 import org.example.idealstore.repository.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -41,17 +42,17 @@ public class UsuarioService {
     public Usuario atualizarSenha(Long idUsuario, String password, String novaSenha, String confirmaSenha) {
 
         if(!novaSenha.equals(confirmaSenha)){
-            throw new RuntimeException("Nova senha não confere com a confirmação de senha....");
+            throw new PasswordInvalidException("Nova senha não confere com a confirmação de senha....");
         }
 
         Usuario senhaUsuario = buscarPorId(idUsuario);
 
         if(!senhaUsuario.getPassword().equals(password)){
-            throw new RuntimeException("Sua senha não confere");
+            throw new PasswordInvalidException("Sua senha antiga não confere");
         }
 
         if (senhaUsuario.getPassword().equals(novaSenha)){
-            throw new RuntimeException("Senha Atual não pode ser igual a mesma senha");
+            throw new PasswordInvalidException("Senha Atual não pode ser igual a senha antiga");
         }
 
         senhaUsuario.setPassword(novaSenha);
