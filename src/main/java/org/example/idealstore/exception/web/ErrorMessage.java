@@ -23,6 +23,10 @@ public class ErrorMessage {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Map<String, String> errors;
 
+    public ErrorMessage(){
+
+    }
+
     public ErrorMessage(HttpServletRequest request, HttpStatus status, String message){
         this.path = request.getRequestURI();
         this.method = request.getMethod();
@@ -45,5 +49,30 @@ public class ErrorMessage {
        for(FieldError fieldError: result.getFieldErrors()){
            this.errors.put(fieldError.getField(), fieldError.getDefaultMessage());
        }
+    }
+
+    // Setters
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setErrors(Map<String, String> errors) {
+        this.errors = errors;
     }
 }
