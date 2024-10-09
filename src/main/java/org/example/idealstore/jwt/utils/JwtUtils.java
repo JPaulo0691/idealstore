@@ -39,7 +39,7 @@ public class JwtUtils {
         return Date.from(endTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    private static JwtToken createToken(String username, String role){
+    public static JwtToken createToken(String username, String role){
         Date issuedAt = new Date();
         Date limit = toExpireDate(issuedAt);
 
@@ -69,11 +69,11 @@ public class JwtUtils {
         return null;
     }
 
-    private static String getUserName(String token){
+    public static String getUserName(String token){
         return getClaimsFromToken(token).getSubject();
     }
 
-    private static boolean isTokenValid(String token){
+    public static boolean isTokenValid(String token){
 
         try{
             Jwts.parserBuilder()

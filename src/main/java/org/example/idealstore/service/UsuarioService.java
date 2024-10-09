@@ -8,7 +8,9 @@ import org.example.idealstore.exception.custom.PasswordInvalidException;
 import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
 import org.example.idealstore.repository.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.example.idealstore.enums.Role;
 
 import java.util.List;
 
@@ -17,10 +19,12 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
         try{
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             return usuarioRepository.save(usuario);
         }catch (DataIntegrityViolationException ex){
             throw new UsernameUniqueViolationException(String.format("Username {%s} já cadastrado", usuario.getUsername()));
@@ -38,6 +42,13 @@ public class UsuarioService {
 
     }
 
+    public Usuario buscarPorUsername(String username){
+        return usuarioRepository
+                .findByUsername(username)
+                .orElseThrow(()-> new EntityNotFoundException(String.format("Usuário com username %s não encontrado", username)));
+
+    }
+
     @Transactional
     public Usuario atualizarSenha(Long idUsuario, String password, String novaSenha, String confirmaSenha) {
 
@@ -47,16 +58,15 @@ public class UsuarioService {
 
         Usuario senhaUsuario = buscarPorId(idUsuario);
 
-        if(!senhaUsuario.getPassword().equals(password)){
-            throw new PasswordInvalidException("Sua senha antiga não confere");
+        if(!passwordEncoder.matches(password, senhaUsuario.getPassword())){
+            throw new PasswordInvalidException("Sua senha não confere");
         }
 
-        if (senhaUsuario.getPassword().equals(novaSenha)){
-            throw new PasswordInvalidException("Senha Atual não pode ser igual a senha antiga");
-        }
-
-        senhaUsuario.setPassword(novaSenha);
+        senhaUsuario.setPassword(passwordEncoder.encode(novaSenha));
         return  senhaUsuario;
+    }
 
+    public Role buscarRolePorUsername(String username) {
+        return usuarioRepository.findRoleByUsername(username);
     }
 }
