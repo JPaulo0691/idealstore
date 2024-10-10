@@ -1,4 +1,4 @@
-package org.example.idealstore.jwt;
+package org.example.idealstore.jwt.token;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

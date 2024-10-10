@@ -41,7 +41,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String username = JwtUtils.getUserName(token);
 
-        toAuthentication(request, username);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            toAuthentication(request, username);
+        }
+        // Após a autenticação ser configurada
+        filterChain.doFilter(request, response);
     }
 
     private void toAuthentication(HttpServletRequest request, String username) {

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.idealstore.dto.request.UsuarioRequest;
 import org.example.idealstore.dto.request.UsuarioUpdatePassword;
 import org.example.idealstore.dto.response.UsuarioResponse;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/usuarios")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Usuarios", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de um usuário.")
 public class UsuarioController {
 
@@ -68,7 +70,9 @@ public class UsuarioController {
             })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponse> encontrarUsuarioId(@PathVariable Long id){
+
         Usuario user = convertDTO.convertObjects(usuarioService.buscarPorId(id), Usuario.class);
+        System.out.println(user.getUsername());
 
         return ResponseEntity.status(HttpStatus.OK).body(convertDTO.convertObjects(user, UsuarioResponse.class));
     }

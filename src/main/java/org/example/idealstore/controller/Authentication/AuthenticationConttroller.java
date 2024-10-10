@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.idealstore.dto.request.UsuarioLoginRequest;
 import org.example.idealstore.exception.web.ErrorMessage;
-import org.example.idealstore.jwt.JwtToken;
+import org.example.idealstore.jwt.token.JwtToken;
 import org.example.idealstore.jwt.service.JwtUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

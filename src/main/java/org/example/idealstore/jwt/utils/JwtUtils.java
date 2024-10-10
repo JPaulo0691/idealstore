@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.example.idealstore.jwt.JwtToken;
+import org.example.idealstore.jwt.token.JwtToken;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -22,7 +22,7 @@ public class JwtUtils {
     public static final String SECRET_KEY = "0123456789-0123456789-0123456789";
     public static final long EXPIRED_DAYS = 0;
     public static final long EXPIRED_HOURS = 0;
-    public static final long EXPIRED_MINUTES = 2;
+    public static final long EXPIRED_MINUTES = 5;
 
     private JwtUtils(){
 
@@ -60,7 +60,7 @@ public class JwtUtils {
         try{
             return Jwts.parserBuilder()
                     .setSigningKey(generateKey()).build()
-                    .parseClaimsJwt(refactorToken(token)).getBody();
+                    .parseClaimsJws(refactorToken(token)).getBody();
 
         }catch(JwtException ex){
             log.error(String.format("Token inválido %s", ex.getMessage()));

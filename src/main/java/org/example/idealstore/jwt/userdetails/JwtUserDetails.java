@@ -1,11 +1,8 @@
-package org.example.idealstore.jwt;
+package org.example.idealstore.jwt.userdetails;
 
 import org.example.idealstore.entity.Usuario;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
-
-import java.util.Collection;
 
 public class JwtUserDetails extends User {
 
