@@ -18,6 +18,7 @@ import org.example.idealstore.service.UsuarioService;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -69,6 +70,9 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = EntityNotFoundException.class)))
             })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR (hasAuthority('CLIENTE') AND #id == authentication.principal.id)")
+    /* Tips: I was using hasRole('ADMIN'), however I was saving in the DATABASE as 'ADMIN', instead of 'ROLE_ADMIN'.
+    The Spring Sec use in the backstage the prefix ROLE_. Because of this, it was necessary to change for hasAuthority('ADMIN')*/
     public ResponseEntity<UsuarioResponse> encontrarUsuarioId(@PathVariable Long id){
 
         Usuario user = convertDTO.convertObjects(usuarioService.buscarPorId(id), Usuario.class);
