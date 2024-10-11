@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class UsuarioController {
     private final ConvertDTO convertDTO;
 
     @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
+               security = @SecurityRequirement(name = "security"),
                responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponse.class))),
@@ -50,11 +52,15 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Listar todos os usuários", description = "Recurso para listar todos os usuários",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Recurso retornado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponse.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponse.class))),
+                    @ApiResponse(responseCode = "403", description = "Usuário sem permissão para acessar este recurso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
            })
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UsuarioResponse>> listarTodosUsuario(){
         List<Usuario> user = convertDTO.convertListObjects(usuarioService.listarTodosUsuarios(), Usuario.class);
         List<UsuarioResponse> userListResponse = convertDTO.convertListObjects(user, UsuarioResponse.class);
@@ -63,9 +69,12 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Pesquisar usuários pelo id", description = "Recurso para trazer usuários específicos por id",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponse.class))),
+                    @ApiResponse(responseCode = "403", description = "Usuário sem permissão para acessar este recurso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = EntityNotFoundException.class)))
             })
@@ -82,13 +91,17 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Editar senha dos usuários por id", description = "Recurso para editar usuários específicos por id",
+            security = @SecurityRequirement(name = "security"),
             responses = {
                     @ApiResponse(responseCode = "204", description = "Usuário editado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponse.class))),
+                    @ApiResponse(responseCode = "403", description = "Usuário sem permissão para acessar este recurso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "400", description = "Os dados fornecidos não estão corretos",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = EntityNotFoundException.class)))
             })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE') AND (#id == authentication.principal.id)")
     public ResponseEntity<Void> atualizarSenhaUsuario(@PathVariable Long id, @Valid @RequestBody UsuarioUpdatePassword usuario){
         Usuario user = convertDTO.convertObjects(usuarioService.atualizarSenha(id
                                                                               , usuario.getSenhaAntiga()
