@@ -2,6 +2,7 @@ package org.example.idealstore.exception.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.example.idealstore.exception.custom.CpfUniqueViolationException;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.exception.custom.PasswordInvalidException;
 import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
@@ -39,7 +40,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) inválido(s)", result));
     }
 
-    @ExceptionHandler(UsernameUniqueViolationException.class)
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class})
     public ResponseEntity<ErrorMessage> dataIntegrityViolationException(RuntimeException ex,
                                                                         HttpServletRequest request){
         log.error("Api Error - ", ex);

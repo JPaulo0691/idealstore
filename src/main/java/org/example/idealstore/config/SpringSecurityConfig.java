@@ -1,7 +1,7 @@
 package org.example.idealstore.config;
 
-import org.example.idealstore.jwt.entrypoint.JwtAuthenticationEntryPoint;
-import org.example.idealstore.jwt.filter.JwtAuthorizationFilter;
+import org.example.idealstore.security.entrypoint.JwtAuthenticationEntryPoint;
+import org.example.idealstore.security.filter.JwtAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

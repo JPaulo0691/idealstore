@@ -1,4 +1,4 @@
-package org.example.idealstore.dto.response;
+package org.example.idealstore.dto.response.Usuario;
 
 import lombok.*;
 

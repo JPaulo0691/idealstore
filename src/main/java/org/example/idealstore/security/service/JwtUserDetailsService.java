@@ -1,11 +1,11 @@
-package org.example.idealstore.jwt.service;
+package org.example.idealstore.security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.enums.Role;
-import org.example.idealstore.jwt.token.JwtToken;
-import org.example.idealstore.jwt.userdetails.JwtUserDetails;
-import org.example.idealstore.jwt.utils.JwtUtils;
+import org.example.idealstore.security.token.JwtToken;
+import org.example.idealstore.security.userdetails.JwtUserDetails;
+import org.example.idealstore.security.utils.JwtUtils;
 import org.example.idealstore.service.UsuarioService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

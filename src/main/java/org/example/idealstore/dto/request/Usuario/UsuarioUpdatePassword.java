@@ -1,4 +1,4 @@
-package org.example.idealstore.dto.request;
+package org.example.idealstore.dto.request.Usuario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,5 @@
-package org.example.idealstore.dto.request;
+package org.example.idealstore.dto.request.Usuario;
+
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UsuarioRequest {
+public class UsuarioLoginRequest {
 
     @NotBlank
     @Email(message = "formato do e-mail inválido", regexp = "^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")

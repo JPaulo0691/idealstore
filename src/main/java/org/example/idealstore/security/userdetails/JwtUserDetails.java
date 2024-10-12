@@ -1,4 +1,4 @@
-package org.example.idealstore.jwt.userdetails;
+package org.example.idealstore.security.userdetails;
 
 import org.example.idealstore.entity.Usuario;
 import org.springframework.security.core.authority.AuthorityUtils;

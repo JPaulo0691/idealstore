@@ -1,4 +1,4 @@
-package org.example.idealstore.jwt.utils;
+package org.example.idealstore.security.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
-import org.example.idealstore.jwt.token.JwtToken;
+import org.example.idealstore.security.token.JwtToken;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

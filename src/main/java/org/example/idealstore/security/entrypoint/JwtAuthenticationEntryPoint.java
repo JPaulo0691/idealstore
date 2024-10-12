@@ -1,4 +1,4 @@
-package org.example.idealstore.jwt.entrypoint;
+package org.example.idealstore.security.entrypoint;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

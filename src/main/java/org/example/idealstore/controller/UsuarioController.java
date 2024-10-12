@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.idealstore.dto.request.UsuarioRequest;
-import org.example.idealstore.dto.request.UsuarioUpdatePassword;
-import org.example.idealstore.dto.response.UsuarioResponse;
+import org.example.idealstore.dto.request.Usuario.UsuarioRequest;
+import org.example.idealstore.dto.request.Usuario.UsuarioUpdatePassword;
+import org.example.idealstore.dto.response.Usuario.UsuarioResponse;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.mapper.ConvertDTO;
@@ -108,7 +108,6 @@ public class UsuarioController {
                                                                               , usuario.getNovaSenha()
                                                                               , usuario.getConfirmaSenha())
                                                                               , Usuario.class);
-
         return ResponseEntity.noContent().build();
     }
 }

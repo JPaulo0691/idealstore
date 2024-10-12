@@ -1,8 +1,8 @@
 package org.example.idealstore;
 
 import org.assertj.core.api.Assertions;
-import org.example.idealstore.dto.request.UsuarioRequest;
-import org.example.idealstore.dto.response.UsuarioResponse;
+import org.example.idealstore.dto.request.Usuario.UsuarioRequest;
+import org.example.idealstore.dto.response.Usuario.UsuarioResponse;
 import org.example.idealstore.exception.web.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
