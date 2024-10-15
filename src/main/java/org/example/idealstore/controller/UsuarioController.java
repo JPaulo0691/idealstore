@@ -14,7 +14,7 @@ import org.example.idealstore.dto.request.Usuario.UsuarioUpdatePassword;
 import org.example.idealstore.dto.response.Usuario.UsuarioResponse;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
-import org.example.idealstore.mapper.ConvertDTO;
+import org.example.idealstore.mapper.ConvertObjects;
 import org.example.idealstore.service.UsuarioService;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final ConvertDTO convertDTO;
+    private final ConvertObjects convertDTO;
 
     @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
                security = @SecurityRequirement(name = "security"),

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ConvertDTO{
+public class ConvertObjects {
 
     private final ModelMapperConfig mapperConfig;
 
