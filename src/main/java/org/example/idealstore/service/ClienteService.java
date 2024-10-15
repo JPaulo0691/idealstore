@@ -5,9 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.Cliente;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.CpfUniqueViolationException;
+import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.ClienteRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +33,16 @@ public class ClienteService {
                     String.format("Cpf %s já está cadastrado no sistema", cliente.getCpf())
             );
         }
+    }
+
+    public Cliente buscarClientePorId(Long id){
+
+        return clienteRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("O cliente id:%s não foi encontrado", id)));
+    }
+
+    public Page<Cliente> listarTodos(Pageable pageable){
+        return clienteRepository.findAll(pageable);
     }
 }
