@@ -1,6 +1,8 @@
 package org.example.idealstore.mapper;
 
 import lombok.AllArgsConstructor;
+import org.example.idealstore.dto.response.Cliente.ClientePageable;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +25,8 @@ public class ConvertObjects {
                 .toList();
     }
 
-    public<T,S> Page<S> convertPageObjects(Page<T> pageObject, Class<S> type){
-        return pageObject // Noncompliant
+    public <T, S> Page<S> convertPageObjects(Page<T> pageObject, Class<S> type) {
+        return pageObject
                 .map(object -> mapperConfig.modelMapper().map(object, type));
 
     }

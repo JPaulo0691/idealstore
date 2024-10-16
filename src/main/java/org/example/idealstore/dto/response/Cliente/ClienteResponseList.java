@@ -27,6 +27,4 @@ public class ClienteResponseList {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataModificacao;
-
-    private String role;
 }

@@ -4,10 +4,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.idealstore.dto.request.Cliente.ClienteRequest;
+import org.example.idealstore.dto.response.Cliente.ClientePageable;
 import org.example.idealstore.dto.response.Cliente.ClienteResponse;
 import org.example.idealstore.dto.response.Cliente.ClienteResponseList;
 import org.example.idealstore.entity.Cliente;
 import org.example.idealstore.mapper.ConvertObjects;
+import org.example.idealstore.repository.projection.ClienteProjection;
 import org.example.idealstore.security.userdetails.JwtUserDetails;
 import org.example.idealstore.service.ClienteService;
 import org.springframework.data.domain.Page;
@@ -54,11 +56,11 @@ public class ClienteController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Page<ClienteResponseList>> listarTodosClientes(Pageable pageable){
-        Page<Cliente> listarTodos = clienteService.listarTodos(pageable);
-        Page<ClienteResponseList> responseList = convert.convertPageObjects(listarTodos, ClienteResponseList.class);
+    public ResponseEntity<ClientePageable> listarTodosClientes(Pageable pageable){
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseList);
+        Page<ClienteProjection> listarTodos = clienteService.listarTodos(pageable);
+        ClientePageable responsePageable = convert.convertObjects(listarTodos, ClientePageable.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responsePageable);
     }
-
 }

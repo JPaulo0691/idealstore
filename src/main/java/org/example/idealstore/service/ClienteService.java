@@ -7,6 +7,7 @@ import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.CpfUniqueViolationException;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.ClienteRepository;
+import org.example.idealstore.repository.projection.ClienteProjection;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class ClienteService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("O cliente id:%s não foi encontrado", id)));
     }
 
-    public Page<Cliente> listarTodos(Pageable pageable){
-        return clienteRepository.findAll(pageable);
+    public Page<ClienteProjection> listarTodos(Pageable pageable){
+        return clienteRepository.findAllPageable(pageable);
     }
 }
