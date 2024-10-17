@@ -68,7 +68,7 @@ public class ClienteController {
     @GetMapping("/detalhe")
     @PreAuthorize("hasAuthority('CLIENTE')")
     public ResponseEntity<ClienteResponse> buscarDetalhesDoCliente(@AuthenticationPrincipal JwtUserDetails userDetails){
-        System.out.println(userDetails.getId());
+
         DetalheProjection cliente = clienteService.buscarPorUsuario(userDetails.getId());
         ClienteResponse clienteResponse = convert.convertObjects(cliente, ClienteResponse.class);
 
