@@ -10,6 +10,7 @@ import org.example.idealstore.dto.response.Cliente.ClienteResponseList;
 import org.example.idealstore.entity.Cliente;
 import org.example.idealstore.mapper.ConvertObjects;
 import org.example.idealstore.repository.projection.ClienteProjection;
+import org.example.idealstore.repository.projection.DetalheProjection;
 import org.example.idealstore.security.userdetails.JwtUserDetails;
 import org.example.idealstore.service.ClienteService;
 import org.springframework.data.domain.Page;
@@ -62,5 +63,15 @@ public class ClienteController {
         ClientePageable responsePageable = convert.convertObjects(listarTodos, ClientePageable.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePageable);
+    }
+
+    @GetMapping("/detalhe")
+    @PreAuthorize("hasAuthority('CLIENTE')")
+    public ResponseEntity<ClienteResponse> buscarDetalhesDoCliente(@AuthenticationPrincipal JwtUserDetails userDetails){
+        System.out.println(userDetails.getId());
+        DetalheProjection cliente = clienteService.buscarPorUsuario(userDetails.getId());
+        ClienteResponse clienteResponse = convert.convertObjects(cliente, ClienteResponse.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteResponse);
     }
 }

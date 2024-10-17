@@ -16,4 +16,5 @@ public class ClienteResponse {
     private Long id;
     private String nome;
     private String cpf;
+    private String role;
 }

@@ -8,6 +8,7 @@ import org.example.idealstore.exception.custom.CpfUniqueViolationException;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.ClienteRepository;
 import org.example.idealstore.repository.projection.ClienteProjection;
+import org.example.idealstore.repository.projection.DetalheProjection;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,5 +46,9 @@ public class ClienteService {
 
     public Page<ClienteProjection> listarTodos(Pageable pageable){
         return clienteRepository.findAllPageable(pageable);
+    }
+
+    public DetalheProjection buscarPorUsuario(Long id){
+        return clienteRepository.findByUsuarioId(id);
     }
 }
