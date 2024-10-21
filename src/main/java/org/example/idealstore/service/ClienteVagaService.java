@@ -3,6 +3,7 @@ package org.example.idealstore.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.ClienteVaga;
+import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.ClienteVagaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +16,16 @@ public class ClienteVagaService {
     @Transactional
     public ClienteVaga cadastrar(ClienteVaga clienteVaga){
         return vagaRepository.save(clienteVaga);
+    }
+
+    public ClienteVaga buscarPorRecibo(String recibo){
+        return vagaRepository.findByReciboAndDataSaidaIsNull(recibo)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Recibo %s não encontrado no sistema ou check-ou já realizado.")
+                );
+    }
+
+    public long getTotalDeVezesEstacionamentoCompleto(String cpfCliente) {
+        return vagaRepository.countByClienteCpfAndDataSaidaIsNotNull(cpfCliente);
     }
 }

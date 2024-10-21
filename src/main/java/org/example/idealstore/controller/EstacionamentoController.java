@@ -6,13 +6,12 @@ import org.example.idealstore.dto.request.ClienteVaga.EstacionamentoRequest;
 import org.example.idealstore.dto.response.ClienteVaga.EstacionamentoResponse;
 import org.example.idealstore.entity.ClienteVaga;
 import org.example.idealstore.mapper.ConvertObjects;
+import org.example.idealstore.service.ClienteVagaService;
 import org.example.idealstore.service.EstacionamentoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -23,7 +22,9 @@ import java.net.URI;
 public class EstacionamentoController {
 
     private final EstacionamentoService estacionamentoService;
+    private final ClienteVagaService vagaService;
     private final ConvertObjects convertObjects;
+    private final ClienteVagaService clienteVagaService;
 
     @PostMapping("/check-in")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -38,4 +39,23 @@ public class EstacionamentoController {
 
         return ResponseEntity.created(location).body(response);
     }
+
+    @GetMapping("check-in/{recibo}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<EstacionamentoResponse> getByRecibo(@PathVariable String recibo){
+        ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
+        EstacionamentoResponse response = convertObjects.convertObjects(clienteVaga, EstacionamentoResponse.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("check-out/{recibo}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<EstacionamentoResponse> checkOut(@PathVariable String recibo){
+        ClienteVaga clienteVaga = estacionamentoService.checkout(recibo);
+        EstacionamentoResponse response = convertObjects.convertObjects(clienteVaga, EstacionamentoResponse.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

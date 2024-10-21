@@ -9,6 +9,7 @@ import org.example.idealstore.enums.StatusVaga;
 import org.example.idealstore.utils.EstacionamentoUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
@@ -33,5 +34,30 @@ public class EstacionamentoService {
 
         return clienteVagaService.cadastrar(clienteVaga);
     }
+
+    @Transactional
+    public ClienteVaga checkout(String recibo) {
+        ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
+
+        LocalDateTime dataSaida = LocalDateTime.now();
+
+        BigDecimal valor= EstacionamentoUtils.calcularCusto(clienteVaga.getDataEntrada(), dataSaida);
+        clienteVaga.setValor(valor);
+
+        long totalVezesQueEstacionouConsecutivamente = clienteVagaService
+                .getTotalDeVezesEstacionamentoCompleto(clienteVaga.getCpfCliente());
+
+        BigDecimal desconto = EstacionamentoUtils.calcularDesconto(valor,totalVezesQueEstacionouConsecutivamente);
+        clienteVaga.setDesconto(desconto);
+
+        clienteVaga.setDataSaida(dataSaida);
+        clienteVaga.getVaga().setStatus(StatusVaga.LIVRE);
+
+       return clienteVagaService.cadastrar(clienteVaga);
+
+    }
+
+
+
 
 }
