@@ -10,6 +10,8 @@ import org.example.idealstore.repository.VagaRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import static org.example.idealstore.enums.StatusVaga.LIVRE;
+
 @RequiredArgsConstructor
 @Service
 public class VagaService {
@@ -28,5 +30,10 @@ public class VagaService {
     public Vaga buscarPorCodigo(String codigo){
         return vagaRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Vaga com código %s não foi encontrada", codigo)));
+    }
+
+    public Vaga buscarPorVagaLivre(){
+        return vagaRepository.findFirstByStatus(LIVRE)
+                .orElseThrow(() -> new EntityNotFoundException("Nenhuma Vaga foi encontrada"));
     }
 }

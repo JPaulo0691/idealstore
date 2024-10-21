@@ -84,4 +84,8 @@ public class ClienteVaga {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public String getCpfCliente(){
+        return cliente.getCpf();
+    }
 }

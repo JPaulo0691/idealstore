@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
@@ -25,4 +27,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
             "           ON U.ID = C.ID_USUARIO" +
             "        WHERE C.ID_USUARIO = :id", nativeQuery = true)
     DetalheProjection findByUsuarioId(@Param("id") Long id);
+
+    Optional<Cliente> findByCpf(String cpf);
 }
