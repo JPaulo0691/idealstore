@@ -54,6 +54,8 @@ public class ClienteService {
 
     public Cliente buscarPorCpf(String cpf){
         return clienteRepository.findByCpf(cpf)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("O cliente com cpf - %s não foi encontrado", cpf)));
+                .orElseThrow(
+                        () -> new EntityNotFoundException(String.format("O cliente com cpf - %s não foi encontrado", cpf))
+                );
     }
 }
