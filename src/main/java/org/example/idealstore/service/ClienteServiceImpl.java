@@ -14,14 +14,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class ClienteService {
+public class ClienteServiceImpl implements org.example.idealstore.service.interfaces.IClienteInterface {
 
     private final ClienteRepository clienteRepository;
-    private final UsuarioService usuarioService;
+    private final UsuarioServiceImpl usuarioService;
 
     @Transactional
     public Cliente cadastrar(Cliente cliente, Long id){

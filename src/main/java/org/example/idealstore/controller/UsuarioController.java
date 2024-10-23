@@ -15,7 +15,8 @@ import org.example.idealstore.dto.response.Usuario.UsuarioResponse;
 import org.example.idealstore.entity.Usuario;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.mapper.ConvertObjects;
-import org.example.idealstore.service.UsuarioService;
+import org.example.idealstore.service.UsuarioServiceImpl;
+import org.example.idealstore.service.interfaces.IUsuarioService;
 import org.modelmapper.spi.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ import java.util.List;
 @Tag(name = "Usuarios", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de um usuário.")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private final IUsuarioService usuarioService;
     private final ConvertObjects convertDTO;
 
     @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",

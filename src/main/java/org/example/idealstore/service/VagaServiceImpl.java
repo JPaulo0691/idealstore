@@ -2,11 +2,11 @@ package org.example.idealstore.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.idealstore.dto.response.Vaga.VagaResponse;
 import org.example.idealstore.entity.Vaga;
 import org.example.idealstore.exception.custom.CodigoUniqueViolationException;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.VagaRepository;
+import org.example.idealstore.service.interfaces.IVagaService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import static org.example.idealstore.enums.StatusVaga.LIVRE;
 
 @RequiredArgsConstructor
 @Service
-public class VagaService {
+public class VagaServiceImpl implements IVagaService {
 
     private final VagaRepository vagaRepository;
 

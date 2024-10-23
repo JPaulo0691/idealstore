@@ -6,7 +6,7 @@ import org.example.idealstore.dto.request.Vaga.VagaRequest;
 import org.example.idealstore.dto.response.Vaga.VagaResponse;
 import org.example.idealstore.entity.Vaga;
 import org.example.idealstore.mapper.ConvertObjects;
-import org.example.idealstore.service.VagaService;
+import org.example.idealstore.service.VagaServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +20,7 @@ import java.net.URI;
 @RequestMapping("api/v1/vagas")
 public class VagaController {
 
-    private final VagaService vagaService;
+    private final VagaServiceImpl vagaService;
     private final ConvertObjects convertObjects;
 
     @PostMapping

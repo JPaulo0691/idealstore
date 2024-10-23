@@ -6,6 +6,7 @@ import org.example.idealstore.entity.Cliente;
 import org.example.idealstore.entity.ClienteVaga;
 import org.example.idealstore.entity.Vaga;
 import org.example.idealstore.enums.StatusVaga;
+import org.example.idealstore.service.interfaces.IEstacionamentoService;
 import org.example.idealstore.utils.EstacionamentoUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,11 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class EstacionamentoService {
+public class EstacionamentoServiceImpl implements IEstacionamentoService {
 
-    private final ClienteService clienteService;
-    private final ClienteVagaService clienteVagaService;
-    private final VagaService vagaService;
+    private final ClienteServiceImpl clienteService;
+    private final ClienteVagaServiceImpl clienteVagaService;
+    private final VagaServiceImpl vagaService;
 
     @Transactional
     public ClienteVaga checkIn(ClienteVaga clienteVaga){

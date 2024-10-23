@@ -6,7 +6,7 @@ import org.example.idealstore.enums.Role;
 import org.example.idealstore.security.token.JwtToken;
 import org.example.idealstore.security.userdetails.JwtUserDetails;
 import org.example.idealstore.security.utils.JwtUtils;
-import org.example.idealstore.service.UsuarioService;
+import org.example.idealstore.service.UsuarioServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final UsuarioService usuarioService;
+    private final UsuarioServiceImpl usuarioService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

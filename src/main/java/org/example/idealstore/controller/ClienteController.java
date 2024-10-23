@@ -6,13 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.idealstore.dto.request.Cliente.ClienteRequest;
 import org.example.idealstore.dto.response.Cliente.ClientePageable;
 import org.example.idealstore.dto.response.Cliente.ClienteResponse;
-import org.example.idealstore.dto.response.Cliente.ClienteResponseList;
 import org.example.idealstore.entity.Cliente;
 import org.example.idealstore.mapper.ConvertObjects;
 import org.example.idealstore.repository.projection.ClienteProjection;
 import org.example.idealstore.repository.projection.DetalheProjection;
 import org.example.idealstore.security.userdetails.JwtUserDetails;
-import org.example.idealstore.service.ClienteService;
+import org.example.idealstore.service.interfaces.IClienteInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,8 +20,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/clientes")
@@ -30,7 +27,7 @@ import java.util.List;
 public class ClienteController {
 
     private final ConvertObjects convert;
-    private final ClienteService clienteService;
+    private final IClienteInterface execute;
 
     @PostMapping
     @PreAuthorize("hasAuthority('CLIENTE')")
@@ -38,7 +35,7 @@ public class ClienteController {
                                                             @AuthenticationPrincipal JwtUserDetails userDetails){
 
         Cliente cliente = convert.convertObjects(request, Cliente.class);
-        clienteService.cadastrar(cliente, userDetails.getId());
+        execute.cadastrar(cliente, userDetails.getId());
 
         ClienteResponse clienteResponse = convert.convertObjects(cliente, ClienteResponse.class);
 
@@ -49,7 +46,7 @@ public class ClienteController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ClienteResponse> encontrarCliente(@PathVariable Long id){
 
-        Cliente cliente = clienteService.buscarClientePorId(id);
+        Cliente cliente = execute.buscarClientePorId(id);
         ClienteResponse response = convert.convertObjects(cliente,ClienteResponse.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -59,7 +56,7 @@ public class ClienteController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ClientePageable> listarTodosClientes(Pageable pageable){
 
-        Page<ClienteProjection> listarTodos = clienteService.listarTodos(pageable);
+        Page<ClienteProjection> listarTodos = execute.listarTodos(pageable);
         ClientePageable responsePageable = convert.convertObjects(listarTodos, ClientePageable.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(responsePageable);
@@ -69,7 +66,7 @@ public class ClienteController {
     @PreAuthorize("hasAuthority('CLIENTE')")
     public ResponseEntity<ClienteResponse> buscarDetalhesDoCliente(@AuthenticationPrincipal JwtUserDetails userDetails){
 
-        DetalheProjection cliente = clienteService.buscarPorUsuario(userDetails.getId());
+        DetalheProjection cliente = execute.buscarPorUsuario(userDetails.getId());
         ClienteResponse clienteResponse = convert.convertObjects(cliente, ClienteResponse.class);
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteResponse);

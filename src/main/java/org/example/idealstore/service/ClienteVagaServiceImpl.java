@@ -5,11 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.idealstore.entity.ClienteVaga;
 import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.repository.ClienteVagaRepository;
+import org.example.idealstore.service.interfaces.IClienteVagaService;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteVagaService {
+public class ClienteVagaServiceImpl implements IClienteVagaService {
 
     private final ClienteVagaRepository vagaRepository;
 

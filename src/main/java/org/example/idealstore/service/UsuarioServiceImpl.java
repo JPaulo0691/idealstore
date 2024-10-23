@@ -7,6 +7,7 @@ import org.example.idealstore.exception.custom.EntityNotFoundException;
 import org.example.idealstore.exception.custom.PasswordInvalidException;
 import org.example.idealstore.exception.custom.UsernameUniqueViolationException;
 import org.example.idealstore.repository.UsuarioRepository;
+import org.example.idealstore.service.interfaces.IUsuarioService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService {
+public class UsuarioServiceImpl implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;

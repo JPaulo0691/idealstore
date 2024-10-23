@@ -6,8 +6,9 @@ import org.example.idealstore.dto.request.ClienteVaga.EstacionamentoRequest;
 import org.example.idealstore.dto.response.ClienteVaga.EstacionamentoResponse;
 import org.example.idealstore.entity.ClienteVaga;
 import org.example.idealstore.mapper.ConvertObjects;
-import org.example.idealstore.service.ClienteVagaService;
-import org.example.idealstore.service.EstacionamentoService;
+import org.example.idealstore.service.interfaces.IClienteVagaService;
+import org.example.idealstore.service.interfaces.IEstacionamentoService;
+import org.example.idealstore.service.interfaces.IVagaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,10 +22,10 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class EstacionamentoController {
 
-    private final EstacionamentoService estacionamentoService;
-    private final ClienteVagaService vagaService;
+    private final IEstacionamentoService estacionamentoService;
+    private final IVagaService vagaService;
     private final ConvertObjects convertObjects;
-    private final ClienteVagaService clienteVagaService;
+    private final IClienteVagaService clienteVagaService;
 
     @PostMapping("/check-in")
     @PreAuthorize("hasAuthority('ADMIN')")
