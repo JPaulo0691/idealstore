@@ -20,4 +20,7 @@ public interface VagaRepository extends JpaRepository<Vaga,Long> {
 
     @Query("SELECT v FROM Vaga v WHERE v.status = 'LIVRE'")
     List<Vaga> findAllVagasLivres();
+
+    List<Vaga> findAllByStatusAndCodigoContaining(StatusVaga statusVaga, String codigo);
+
 }
