@@ -40,4 +40,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     List<Cliente> findAllClienteDetalhe(@Param("id") Long id);
 
     Optional<Cliente> findByCpf(String cpf);
+
+
+
 }
