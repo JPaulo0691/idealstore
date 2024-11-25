@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,5 +47,21 @@ public class VagaController {
         return ResponseEntity.status(HttpStatus.OK).body(vagaResponse);
     }
 
+    @GetMapping("/listar-todas-vagas")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<VagaResponse>> listarVagas(){
+        List<Vaga> vagas = convertObjects.convertListObjects(vagaService.listarVagas(), Vaga.class);
+        List<VagaResponse> vagasResponse = convertObjects.convertListObjects(vagas, VagaResponse.class);
 
+        return ResponseEntity.status(HttpStatus.OK).body(vagasResponse);
+    }
+
+    @GetMapping("/listar-vagas-disponiveis")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<VagaResponse>> listarVagasDisponiveis(){
+        List<Vaga> vagas = convertObjects.convertListObjects(vagaService.listarVagasDisponiveis(), Vaga.class);
+        List<VagaResponse> vagasResponse = convertObjects.convertListObjects(vagas, VagaResponse.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(vagasResponse);
+    }
 }

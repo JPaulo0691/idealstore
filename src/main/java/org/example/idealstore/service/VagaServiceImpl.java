@@ -10,6 +10,8 @@ import org.example.idealstore.service.interfaces.IVagaService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.example.idealstore.enums.StatusVaga.LIVRE;
 
 @RequiredArgsConstructor
@@ -35,5 +37,13 @@ public class VagaServiceImpl implements IVagaService {
     public Vaga buscarPorVagaLivre(){
         return vagaRepository.findFirstByStatus(LIVRE)
                 .orElseThrow(() -> new EntityNotFoundException("Nenhuma Vaga foi encontrada"));
+    }
+
+    public List<Vaga> listarVagas(){
+        return vagaRepository.findAll();
+    }
+
+    public List<Vaga> listarVagasDisponiveis(){
+        return vagaRepository.findAllByStatus(LIVRE);
     }
 }

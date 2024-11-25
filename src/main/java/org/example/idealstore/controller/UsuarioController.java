@@ -29,6 +29,7 @@ import java.util.List;
 @RequestMapping("api/v1/usuarios")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = "Usuarios", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de um usuário.")
 public class UsuarioController {
 
